@@ -4,6 +4,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+
+/* Excute coommand : cat list | ./ungz*/
+
 void main(){
 	int i,s;
 	pid_t pid;
