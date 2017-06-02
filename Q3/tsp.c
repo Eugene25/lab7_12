@@ -1,14 +1,22 @@
 #include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 
 int m[17][17] ;
+
+pid_t pid;
 
 int path[17] ;
 int used[17] ;
 int length = 0 ;
 int min = -1 ;
+
+void handler(int signum)
+{
+	int s;
+	kill(pid, SIGINT);
+	wait(%s);
+	printf("minimum route %d", min);
+}
+
 
 void _travel(int idx) {
 	int i ;
@@ -45,6 +53,8 @@ void travel(int start) {
 
 int main() {
 	int i, j, t ;
+	
+	signal(SIGINT, handler);
 
 	FILE * fp = fopen("gr17.tsp", "r") ;
 
@@ -56,6 +66,9 @@ int main() {
 	}
 	fclose(fp) ;
 
-	for (i = 0  ; i < 17 ; i--) 
-		travel(i) ;
+	for (i = 0  ; i < 17 ; i++) 
+	{	
+		if((pid=fork())==0)
+			travel(i) ;	
+	}
 }
